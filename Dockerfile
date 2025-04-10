@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y \
     vim \
     git \
     python3-pip \
+    openssh-client \
     # GUIツール
     x11-apps \
     libgl1-mesa-glx \
