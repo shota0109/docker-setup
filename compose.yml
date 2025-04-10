@@ -1,0 +1,32 @@
+services:
+  ros:
+    build:
+      context: .
+      args:
+        UID: ${UID}
+        GID: ${GID}
+        USERNAME: ${USER_NAME}
+        GROUPNAME: ${GROUP_NAME}
+        PASSWORD: ${PASSWORD}
+        HOMEWORKSPACE: ${HOMEWORKSPACE}
+    image: ros-humble
+    container_name: ros_humble
+    network_mode: host
+    volumes:
+      # GUI操作用
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      # ホスト側のワークスペースをコンテナ内にマウント
+      - type: bind
+        source: ../ #実行したディレクトリから1個戻る
+        target: /home/${USER_NAME}/${HOMEWORKSPACE}
+      # ホスト側のSSH設定をコンテナ内にマウント
+      - ~/.ssh:/home/${USER_NAME}/.ssh:ro
+    environment:
+      - DISPLAY=$DISPLAY
+    tty: true
+    devices:
+      - "/dev/video0:/dev/video0"
+      - "/dev/video1:/dev/video1"
+      - "/dev/media3:/dev/media3"
+    privileged: true
+    command: bash
