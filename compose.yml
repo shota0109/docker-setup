@@ -5,8 +5,8 @@ services:
       args:
         UID: ${UID}
         GID: ${GID}
-        USERNAME: ${USER_NAME}
-        GROUPNAME: ${GROUP_NAME}
+        USER_NAME: ${USER_NAME}
+        GROUP_NAME: ${GROUP_NAME}
         PASSWORD: ${PASSWORD}
         HOMEWORKSPACE: ${HOMEWORKSPACE}
     image: ros-humble
@@ -25,8 +25,8 @@ services:
       - DISPLAY=$DISPLAY
     tty: true
     devices:
-      - "/dev/video0:/dev/video0"
-      - "/dev/video1:/dev/video1"
+      - "/dev/video0:/dev/video0" #個体によって変化する可能性あり
+      - "/dev/video1:/dev/video1" #
       - "/dev/media3:/dev/media3"
     privileged: true
     command: bash
