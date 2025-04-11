@@ -38,18 +38,18 @@ RUN pip install --no-cache-dir opencv-python
 
 
 # ユーザーを作成
-ARG UID GID USERNAME GROUPNAME PASSWORD HOMEWORKSPACE
-RUN groupadd -g $GID $GROUPNAME && \
-    useradd -m -s /bin/bash -u $UID -g $GID -G sudo $USERNAME && \
-    echo $USERNAME:$PASSWORD | chpasswd && \
-    echo "$USERNAME   ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
-USER $USERNAME
+ARG UID GID USER_NAME GROUP_NAME PASSWORD HOMEWORKSPACE
+RUN groupadd -g $GID $GROUP_NAME && \
+    useradd -m -s /bin/bash -u $UID -g $GID -G sudo $USER_NAME && \
+    echo $USER_NAME:$PASSWORD | chpasswd && \
+    echo "$USER_NAME   ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+USER $USER_NAME
 
 # ワークスペース作成
-WORKDIR /home/$USERNAME/$HOMEWORKSPACE
+WORKDIR /home/$USER_NAME/$HOMEWORKSPACE
 
 # ROSのセットアップスクリプトを.bashrcに追記
-RUN echo "source /opt/ros/humble/setup.bash" >> /home/$USERNAME/.bashrc
-RUN echo "source ~/$HOMEWORKSPACE/install/setup.bash" >> /home/$USERNAME/.bashrc
+RUN echo "source /opt/ros/humble/setup.bash" >> /home/$USER_NAME/.bashrc
+RUN echo "source ~/$HOMEWORKSPACE/install/setup.bash" >> /home/$USER_NAME/.bashrc
 
 CMD ["bash"]
